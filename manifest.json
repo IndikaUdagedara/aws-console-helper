@@ -1,0 +1,17 @@
+{
+  // Required
+  "manifest_version": 2,
+  "name": "aws-sso-helper",
+  "version": "1.0",
+  "options_page": "options.html",
+  "permissions" : ["storage"],
+  // Recommended
+  "description": "AWS SSO Console helper",
+  "content_scripts": [
+    {
+      "matches": ["https://*.aws.amazon.com/*"],
+      "css": [],
+      "js": ["jquery.min.js", "jquery.cookie.js", "main.js"]
+    }
+  ] 
+}
