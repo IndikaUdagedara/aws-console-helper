@@ -5,21 +5,36 @@ function initialise() {
 
 	
 	//  AWSxxxxx/aa@yy.com @ 11111111111
-	var re = /(.*)\/(.*) @ (.*)/
+	var re_role = /(.*)\/(.*) @ (.*)/
 
-	var m = val.match(re)
-	if (!m)
+	// user @ 11111111111
+	var re_user = /(.*) @ (.*)/
+
+
+	var m = val.match(re_role)
+	
+
+	if (m)
 	{
-		console.log('Unable to parse ', val)
-		return;
+		lookup(m[1], m[2], m[3], function(l) {
+			console.log(l);
+			elem.text(`${l.userAlias} @ ${l.accountAlias}/${l.roleAlias}`)
+			elem.css('max-width', '400px')
+		})
+
+		return
 	}
 
-	var l = lookup(m[1], m[2], m[3], function(l) {
-		elem.text(`${l.userAlias} @ ${l.accountAlias}/${l.roleAlias}`)
-		elem.css('max-width', '400px')
-	})
-	console.log(l);
-	
+	m = val.match(re_user)
+
+	if (m)
+	{
+		lookup("", m[1], m[2], function(l) {
+			console.log(l);
+			elem.text(`${l.userAlias} @ ${l.accountAlias}`)
+			elem.css('max-width', '400px')
+		})
+	}
 }
 
 function lookup(role, user, account, f) {
