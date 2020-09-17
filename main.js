@@ -1,22 +1,15 @@
 function initialise() {
 
-	var elem = $('#nav-usernameMenu > div.nav-elt-label');
-	var val = elem.attr('title')
-
-	
-	//  AWSxxxxx/aa@yy.com @ 11111111111
-	var re_role = /(.*)\/(.*) @ (.*)/
-
-	// user @ 11111111111
-	var re_user = /(.*) @ (.*)/
-
-
-	var m = val.match(re_role)
-	
-
-	if (m)
+	var role = $("#menu--account > div > ul > li").attr("title")
+	if (role)
 	{
-		lookup(m[1], m[2], m[3], function(l) {
+		var re_role = /(.*)\/(.*)/
+		var m = role.match(re_role)
+
+		var elem = $("#nav-usernameMenu > span > span").first()
+		var account = $("#menu--account > div > ul > li:nth-child(1) > span").text().replace(/-/g, "")
+
+		lookup(m[1], m[2], account, function(l) {
 			console.log(l);
 			elem.text(`${l.userAlias} @ ${l.accountAlias}/${l.roleAlias}`)
 			elem.css('max-width', '400px')
@@ -25,6 +18,9 @@ function initialise() {
 		return
 	}
 
+	var re_user = /(.*) @ (.*)/
+	elem = $("#nav-usernameMenu > div.nav-elt-label");
+	val = elem.attr("title");
 	m = val.match(re_user)
 
 	if (m)
