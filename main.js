@@ -1,12 +1,13 @@
 function initialise() {
 
 	var role = $("#menu--account > div > ul > li").attr("title")
-	if (role)
-	{
-		var re_role = /(.*)\/(.*)/
-		var m = role.match(re_role)
+	var elem = $("#nav-usernameMenu > span > span").first()
+	var re_role = /(.*)\/(.*)/
+	var m = role.match(re_role)
 
-		var elem = $("#nav-usernameMenu > span > span").first()
+	if (role && m)
+	{
+		
 		var account = $("#menu--account > div > ul > li:nth-child(1) > span").text().replace(/-/g, "")
 
 		lookup(m[1], m[2], account, function(l) {
@@ -18,14 +19,14 @@ function initialise() {
 		return
 	}
 
+	
 	var re_user = /(.*) @ (.*)/
-	elem = $("#nav-usernameMenu > div.nav-elt-label");
-	val = elem.attr("title");
-	m = val.match(re_user)
+	m = elem.text().match(re_user)
 
 	if (m)
 	{
-		lookup("", m[1], m[2], function(l) {
+		account = m[2].replace(/-/g, "")
+		lookup("", m[1], account, function(l) {
 			console.log(l);
 			elem.text(`${l.userAlias} @ ${l.accountAlias}`)
 			elem.css('max-width', '400px')
